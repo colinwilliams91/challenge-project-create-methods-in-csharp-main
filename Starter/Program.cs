@@ -28,9 +28,17 @@ InitializeGame();
 while (!shouldExit) 
 {
     if (TerminalResized())
+    {
         Terminate(resizeTermination: true);
+    }
 
     Move(badKeyExit: true);
+
+    if (PlayerEating())
+    {
+        ChangePlayer();
+        ShowFood();
+    }
 }
 
 // Returns true if the Terminal was resized 
@@ -131,4 +139,12 @@ void Terminate(bool resizeTermination)
     Console.Clear();
     Console.WriteLine($"{terminationType} Program exiting.");
     return;
+}
+
+bool PlayerEating()
+{
+    if (playerX == foodX && playerY == foodY)
+        return true;
+
+    return false;
 }
