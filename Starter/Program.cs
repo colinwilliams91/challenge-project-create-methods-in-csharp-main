@@ -39,6 +39,11 @@ while (!shouldExit)
         ChangePlayer();
         ShowFood();
     }
+
+    if (ShouldFreeze())
+    {
+        FreezePlayer();
+    }
 }
 
 // Returns true if the Terminal was resized 
@@ -147,4 +152,9 @@ bool PlayerEating()
         return true;
 
     return false;
+}
+
+bool ShouldFreeze()
+{
+    return player == states[2] ? true : false;
 }
