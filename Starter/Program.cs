@@ -1,5 +1,7 @@
 ﻿using System;
 
+// TODO: reset from fast state before next food consumed || ensure double fast food wont happen
+
 Random random = new Random();
 Console.CursorVisible = false;
 int height = Console.WindowHeight - 1;
@@ -24,6 +26,7 @@ string player = states[0];
 // Index of the current food
 int food = 0;
 
+// Game Play
 InitializeGame();
 while (!shouldExit) 
 {
@@ -32,7 +35,14 @@ while (!shouldExit)
         Terminate(resizeTermination: true);
     }
 
-    Move(badKeyExit: true);
+    if (player == states[1])
+    {
+        Move(badKeyExit: true, moveSpeed: 3);
+    }
+    else
+    {
+        Move(badKeyExit: true);
+    }
 
     if (PlayerEating())
     {
@@ -83,7 +93,7 @@ void FreezePlayer()
 }
 
 // Reads directional input from the Console and moves the player
-void Move(bool badKeyExit = false) 
+void Move(bool badKeyExit = false, int moveSpeed = 1) 
 {
     int lastX = playerX;
     int lastY = playerY;
@@ -97,10 +107,10 @@ void Move(bool badKeyExit = false)
             playerY++; 
             break;
 		case ConsoleKey.LeftArrow:  
-            playerX--; 
+            playerX -= moveSpeed; 
             break;
 		case ConsoleKey.RightArrow: 
-            playerX++; 
+            playerX += moveSpeed; 
             break;
 		case ConsoleKey.Escape:     
             shouldExit = true; 
